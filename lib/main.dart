@@ -1,7 +1,3 @@
-import 'package:chess/screens/login/login.dart';
-import 'package:chess/screens/register/register1.dart';
-import 'package:chess/screens/register/register2.dart';
-import 'package:chess/screens/register/register3.dart';
 import 'package:chess/screens/welcome.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
