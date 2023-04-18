@@ -1,4 +1,7 @@
+import 'package:chess/screens/login/login.dart';
+import 'package:chess/screens/register/register1.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
@@ -35,10 +38,15 @@ class WelcomeScreen extends StatelessWidget {
                       )
                     ],
                   ),
-                  const Text(
-                    "Log In",
-                    style: TextStyle(
-                        color: Colors.white, fontWeight: FontWeight.w400),
+                  InkWell(
+                    onTap: () {
+                      Get.to(const LoginScreen());
+                    },
+                    child: const Text(
+                      "Log In",
+                      style: TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.w400),
+                    ),
                   )
                 ],
               ),
@@ -61,20 +69,25 @@ class WelcomeScreen extends StatelessWidget {
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.1,
             ),
-            Container(
-              height: 50,
-              width: MediaQuery.of(context).size.width - 100,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: const Color(0xff95BB4A),
-              ),
-              child: const Center(
-                child: Text(
-                  'Sign Up With Email',
-                  style: TextStyle(
-                      fontWeight: FontWeight.w700,
-                      color: Colors.white,
-                      fontSize: 18),
+            InkWell(
+              onTap: () {
+                Get.to(const RegisterScreen1());
+              },
+              child: Container(
+                height: 50,
+                width: MediaQuery.of(context).size.width - 100,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: const Color(0xff95BB4A),
+                ),
+                child: const Center(
+                  child: Text(
+                    'Sign Up With Email',
+                    style: TextStyle(
+                        fontWeight: FontWeight.w700,
+                        color: Colors.white,
+                        fontSize: 18),
+                  ),
                 ),
               ),
             ),

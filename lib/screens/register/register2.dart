@@ -1,4 +1,6 @@
+import 'package:chess/screens/register/register3.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class RegisterScreen2 extends StatelessWidget {
   const RegisterScreen2({super.key});
@@ -14,6 +16,23 @@ class RegisterScreen2 extends StatelessWidget {
           children: [
             Column(
               children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          Get.back();
+                        },
+                        child: const Icon(
+                          Icons.arrow_back_ios,
+                          color: Colors.white,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
                 const SizedBox(height: 20),
                 const Center(
                   child: Text(
@@ -45,7 +64,7 @@ class RegisterScreen2 extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const Icon(
-                          Icons.mail,
+                          Icons.lock,
                           color: Colors.white,
                         ),
                         const SizedBox(width: 5),
@@ -88,7 +107,7 @@ class RegisterScreen2 extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const Icon(
-                          Icons.mail,
+                          Icons.lock,
                           color: Colors.white,
                         ),
                         const SizedBox(width: 5),
@@ -117,20 +136,25 @@ class RegisterScreen2 extends StatelessWidget {
             ),
             Column(
               children: [
-                Container(
-                  height: 50,
-                  width: MediaQuery.of(context).size.width - 100,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: const Color(0xff95BB4A),
-                  ),
-                  child: const Center(
-                    child: Text(
-                      'Continue',
-                      style: TextStyle(
-                          fontWeight: FontWeight.w700,
-                          color: Colors.white,
-                          fontSize: 18),
+                InkWell(
+                  onTap: () {
+                    Get.to(const RegisterScreen3());
+                  },
+                  child: Container(
+                    height: 50,
+                    width: MediaQuery.of(context).size.width - 100,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: const Color(0xff95BB4A),
+                    ),
+                    child: const Center(
+                      child: Text(
+                        'Continue',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w700,
+                            color: Colors.white,
+                            fontSize: 18),
+                      ),
                     ),
                   ),
                 ),

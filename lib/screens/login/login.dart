@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class RegisterScreen3 extends StatelessWidget {
-  const RegisterScreen3({super.key});
+class LoginScreen extends StatelessWidget {
+  const LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +35,7 @@ class RegisterScreen3 extends StatelessWidget {
                 const SizedBox(height: 20),
                 const Center(
                   child: Text(
-                    "Choose a username",
+                    "Login",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         fontSize: 25,
@@ -48,7 +48,7 @@ class RegisterScreen3 extends StatelessWidget {
                 ),
                 Center(
                   child: Text(
-                    "This is what your friends and other players\nwill see when you play",
+                    "Login using your email/ username",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         fontSize: 18,
@@ -90,7 +90,52 @@ class RegisterScreen3 extends StatelessWidget {
                             ),
                             decoration: InputDecoration(
                               border: InputBorder.none,
-                              hintText: 'Username',
+                              hintText: 'Username or Email',
+                              hintStyle: TextStyle(
+                                color: Colors.grey.withOpacity(0.7),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.02,
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Colors.transparent,
+                    border: Border.all(
+                      color: Colors.grey.withOpacity(0.7),
+                      width: 1,
+                    ),
+                  ),
+                  height: 50,
+                  width: MediaQuery.of(context).size.width - 100,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Icon(
+                          Icons.lock,
+                          color: Colors.white,
+                        ),
+                        const SizedBox(width: 5),
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width - 150,
+                          // height: 30,
+
+                          child: TextField(
+                            style: const TextStyle(
+                              color: Colors.white,
+                            ),
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                              hintText: 'Password',
                               hintStyle: TextStyle(
                                 color: Colors.grey.withOpacity(0.7),
                               ),
@@ -114,7 +159,7 @@ class RegisterScreen3 extends StatelessWidget {
                   ),
                   child: const Center(
                     child: Text(
-                      'Create Account',
+                      'Login',
                       style: TextStyle(
                           fontWeight: FontWeight.w700,
                           color: Colors.white,
@@ -122,7 +167,15 @@ class RegisterScreen3 extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(height: 20)
+                const SizedBox(height: 10),
+                const Text(
+                  'Forgot Password',
+                  style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      color: Color(0xff95BB4A),
+                      fontSize: 15),
+                ),
+                const SizedBox(height: 20),
               ],
             ),
           ],
