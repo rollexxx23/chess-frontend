@@ -1,9 +1,20 @@
+import 'package:chess/models/auth/user_reg.dart';
+import 'package:chess/services/auth/auth_services.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class RegisterScreen3 extends StatelessWidget {
-  const RegisterScreen3({super.key});
+class RegisterScreen3 extends StatefulWidget {
+  String email;
+  String password;
+  RegisterScreen3({super.key, required this.email, required this.password});
 
+  @override
+  State<RegisterScreen3> createState() => _RegisterScreen3State();
+}
+
+class _RegisterScreen3State extends State<RegisterScreen3> {
+  TextEditingController userTextController = TextEditingController();
+  String errorMsg = "";
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -88,6 +99,7 @@ class RegisterScreen3 extends StatelessWidget {
                             style: const TextStyle(
                               color: Colors.white,
                             ),
+                            controller: userTextController,
                             decoration: InputDecoration(
                               border: InputBorder.none,
                               hintText: 'Username',
@@ -101,24 +113,46 @@ class RegisterScreen3 extends StatelessWidget {
                     ),
                   ),
                 ),
+                const SizedBox(height: 30),
+                Text(
+                  errorMsg,
+                  style: const TextStyle(
+                      fontSize: 15,
+                      color: Colors.red,
+                      fontWeight: FontWeight.w500),
+                )
               ],
             ),
             Column(
               children: [
-                Container(
-                  height: 50,
-                  width: MediaQuery.of(context).size.width - 100,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: const Color(0xff95BB4A),
-                  ),
-                  child: const Center(
-                    child: Text(
-                      'Create Account',
-                      style: TextStyle(
-                          fontWeight: FontWeight.w700,
-                          color: Colors.white,
-                          fontSize: 18),
+                InkWell(
+                  onTap: () async {
+                    String? msg = await AuthServices.registerUser(
+                        UserRegisterModel(
+                            email: widget.email,
+                            password: widget.password,
+                            username: userTextController.text));
+                    if (msg != null) {
+                      setState(() {
+                        errorMsg = msg;
+                      });
+                    }
+                  },
+                  child: Container(
+                    height: 50,
+                    width: MediaQuery.of(context).size.width - 100,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: const Color(0xff95BB4A),
+                    ),
+                    child: const Center(
+                      child: Text(
+                        'Create Account',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w700,
+                            color: Colors.white,
+                            fontSize: 18),
+                      ),
                     ),
                   ),
                 ),

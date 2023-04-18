@@ -2,9 +2,15 @@ import 'package:chess/screens/register/register2.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class RegisterScreen1 extends StatelessWidget {
+class RegisterScreen1 extends StatefulWidget {
   const RegisterScreen1({super.key});
 
+  @override
+  State<RegisterScreen1> createState() => _RegisterScreen1State();
+}
+
+class _RegisterScreen1State extends State<RegisterScreen1> {
+  TextEditingController emailTextController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -76,6 +82,7 @@ class RegisterScreen1 extends StatelessWidget {
                             style: const TextStyle(
                               color: Colors.white,
                             ),
+                            controller: emailTextController,
                             decoration: InputDecoration(
                               border: InputBorder.none,
                               hintText: 'Email',
@@ -95,7 +102,9 @@ class RegisterScreen1 extends StatelessWidget {
               children: [
                 InkWell(
                   onTap: () {
-                    Get.to(const RegisterScreen2());
+                    Get.to(RegisterScreen2(
+                      email: emailTextController.text,
+                    ));
                   },
                   child: Container(
                     height: 50,

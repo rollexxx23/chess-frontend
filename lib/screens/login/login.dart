@@ -1,9 +1,19 @@
+import 'package:chess/models/auth/user_login.dart';
+import 'package:chess/services/auth/auth_services.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  TextEditingController emailTextController = TextEditingController();
+  TextEditingController pwTextController = TextEditingController();
+  String errorMsg = "";
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -88,6 +98,7 @@ class LoginScreen extends StatelessWidget {
                             style: const TextStyle(
                               color: Colors.white,
                             ),
+                            controller: emailTextController,
                             decoration: InputDecoration(
                               border: InputBorder.none,
                               hintText: 'Username or Email',
@@ -133,6 +144,7 @@ class LoginScreen extends StatelessWidget {
                             style: const TextStyle(
                               color: Colors.white,
                             ),
+                            controller: pwTextController,
                             decoration: InputDecoration(
                               border: InputBorder.none,
                               hintText: 'Password',
@@ -146,24 +158,45 @@ class LoginScreen extends StatelessWidget {
                     ),
                   ),
                 ),
+                const SizedBox(height: 30),
+                Text(
+                  errorMsg,
+                  style: const TextStyle(
+                      fontSize: 15,
+                      color: Colors.red,
+                      fontWeight: FontWeight.w500),
+                )
               ],
             ),
             Column(
               children: [
-                Container(
-                  height: 50,
-                  width: MediaQuery.of(context).size.width - 100,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: const Color(0xff95BB4A),
-                  ),
-                  child: const Center(
-                    child: Text(
-                      'Login',
-                      style: TextStyle(
-                          fontWeight: FontWeight.w700,
-                          color: Colors.white,
-                          fontSize: 18),
+                InkWell(
+                  onTap: () async {
+                    String? msg = await AuthServices.loginUser(UserLoginModel(
+                        email: emailTextController.text,
+                        password: pwTextController.text));
+
+                    if (msg != null) {
+                      setState(() {
+                        errorMsg = msg;
+                      });
+                    }
+                  },
+                  child: Container(
+                    height: 50,
+                    width: MediaQuery.of(context).size.width - 100,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: const Color(0xff95BB4A),
+                    ),
+                    child: const Center(
+                      child: Text(
+                        'Login',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w700,
+                            color: Colors.white,
+                            fontSize: 18),
+                      ),
                     ),
                   ),
                 ),

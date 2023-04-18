@@ -2,9 +2,17 @@ import 'package:chess/screens/register/register3.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class RegisterScreen2 extends StatelessWidget {
-  const RegisterScreen2({super.key});
+class RegisterScreen2 extends StatefulWidget {
+  String email;
+  RegisterScreen2({super.key, required this.email});
 
+  @override
+  State<RegisterScreen2> createState() => _RegisterScreen2State();
+}
+
+class _RegisterScreen2State extends State<RegisterScreen2> {
+  TextEditingController pwTextController = TextEditingController();
+  TextEditingController cpwTextController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -76,6 +84,7 @@ class RegisterScreen2 extends StatelessWidget {
                             style: const TextStyle(
                               color: Colors.white,
                             ),
+                            controller: pwTextController,
                             decoration: InputDecoration(
                               border: InputBorder.none,
                               hintText: 'Password',
@@ -119,6 +128,7 @@ class RegisterScreen2 extends StatelessWidget {
                             style: const TextStyle(
                               color: Colors.white,
                             ),
+                            controller: cpwTextController,
                             decoration: InputDecoration(
                               border: InputBorder.none,
                               hintText: 'Confirm Password',
@@ -137,9 +147,15 @@ class RegisterScreen2 extends StatelessWidget {
             Column(
               children: [
                 InkWell(
-                  onTap: () {
-                    Get.to(const RegisterScreen3());
-                  },
+                  onTap:
+                      (validPw(pwTextController.text, cpwTextController.text))
+                          ? () {
+                              Get.to(RegisterScreen3(
+                                email: widget.email,
+                                password: pwTextController.text,
+                              ));
+                            }
+                          : null,
                   child: Container(
                     height: 50,
                     width: MediaQuery.of(context).size.width - 100,
@@ -166,4 +182,10 @@ class RegisterScreen2 extends StatelessWidget {
       ),
     );
   }
+}
+
+bool validPw(String pw, String cpw) {
+  if (pw != cpw) return false;
+  if (pw.length < 8) return false;
+  return true;
 }
