@@ -1,4 +1,4 @@
-import 'package:chess/screens/register/register2.dart';
+import 'package:chess_game/screens/register/register2.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

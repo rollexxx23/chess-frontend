@@ -1,5 +1,5 @@
-import 'package:chess/models/auth/user_reg.dart';
-import 'package:chess/services/auth/auth_services.dart';
+import 'package:chess_game/models/auth/user_reg.dart';
+import 'package:chess_game/services/auth/auth_services.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

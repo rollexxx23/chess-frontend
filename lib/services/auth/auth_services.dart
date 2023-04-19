@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:chess/models/auth/user_login.dart';
-import 'package:chess/models/auth/user_reg.dart';
+import 'package:chess_game/models/auth/user_login.dart';
+import 'package:chess_game/models/auth/user_reg.dart';
 
 class AuthServices {
   static loginUser(UserLoginModel model) async {

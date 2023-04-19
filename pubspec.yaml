@@ -1,4 +1,4 @@
-name: chess
+name: chess_game
 description: A new Flutter project.
 
 # The following line prevents the package from being accidentally published to
@@ -37,6 +37,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   get: ^4.6.5
   http: ^0.13.5
+  flutter_stateless_chessboard: ^0.0.2
+  chess: ^0.6.5
 
 dev_dependencies:
   flutter_test:
