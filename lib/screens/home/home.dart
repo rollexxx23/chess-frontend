@@ -1,120 +1,91 @@
-// ignore_for_file: import_of_legacy_library_into_null_safe
-
-import 'package:chess_game/models/game/game_state.dart';
-import 'package:chess_game/utils/chess_game.dart' show makeMove;
+import 'package:chess_game/screens/game_modes/user_v_user.dart';
 import 'package:flutter/material.dart';
-import "package:flutter_stateless_chessboard/flutter_stateless_chessboard.dart"
-    show Chessboard;
 import 'package:get/get.dart';
 
-const List<String> outcomes = ["Draw", "White", "Black"];
-
-class HomeScreen extends StatefulWidget {
-  @override
-  _HomeScreenState createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  String? _fen = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';
-  String errMsg = "";
-  int player = 0;
-  int cur = -1;
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.black,
         body: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(15.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  InkWell(
-                    onTap: () {
-                      Get.back();
-                    },
-                    child: const Icon(
-                      Icons.arrow_back_ios,
-                      color: Colors.white,
-                    ),
+                  const Text(
+                    "Profile",
+                    style: TextStyle(
+                        color: Colors.black, fontWeight: FontWeight.w400),
                   ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                          height: 25, child: Image.asset("assets/logo2.jpg")),
+                      const Text(
+                        "Chess",
+                        style: TextStyle(
+                            fontSize: 18,
+                            color: Color(0xff95BB4A),
+                            fontWeight: FontWeight.w400),
+                      )
+                    ],
+                  ),
+                  InkWell(
+                    onTap: () {},
+                    child: const Text(
+                      "Profile",
+                      style: TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.w400),
+                    ),
+                  )
                 ],
               ),
             ),
-            Center(
+            const SizedBox(height: 40),
+            InkWell(
+              onTap: () {
+                Get.to(UserVsScreen());
+              },
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  player == 0 ? "White to move" : "Black to move",
-                  style: const TextStyle(
-                      fontSize: 18,
-                      color: Color(0xff95BB4A),
-                      fontWeight: FontWeight.w400),
+                padding: const EdgeInsets.symmetric(horizontal: 15),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Image.asset("assets/chess.png"),
+                    const SizedBox(width: 8),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          "V/S Mode",
+                          style: TextStyle(
+                              fontSize: 18,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w400),
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        Text(
+                          "Play against each other in \nsame device",
+                          style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.grey.withOpacity(0.7),
+                              fontWeight: FontWeight.w400),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ),
-            ),
-            Chessboard(
-              fen: _fen,
-              size: size.width,
-              onMove: (move) {
-                if (cur != -1) {
-                  return;
-                }
-                final state = makeMove(
-                    _fen,
-                    {
-                      'from': move.from,
-                      'to': move.to,
-                      'promotion': 'q',
-                    },
-                    0);
-                print(state.fen);
-                if (state.fen == "invalid") {
-                  setState(() {
-                    errMsg = "Invalid Move";
-                  });
-                } else if (state.outcome != -1) {
-                  setState(() {
-                    cur = state.outcome;
-                    _fen = state.fen;
-                    errMsg = "";
-                    player = 1 - player;
-                  });
-                } else {
-                  setState(() {
-                    _fen = state.fen;
-                    errMsg = "";
-                    player = 1 - player;
-                  });
-                }
-              },
-            ),
-            const SizedBox(height: 40),
-            Center(
-              child: Text(
-                errMsg,
-                style: const TextStyle(
-                    fontSize: 18,
-                    color: Colors.red,
-                    fontWeight: FontWeight.w500),
-              ),
-            ),
-            (cur != -1)
-                ? Center(
-                    child: Text(
-                      "Game Ended With: ${outcomes[cur]} ${(cur) > 0 ? "win" : ""}",
-                      style: const TextStyle(
-                          fontSize: 18,
-                          color: Colors.green,
-                          fontWeight: FontWeight.w500),
-                    ),
-                  )
-                : Container(),
+            )
           ],
         ),
       ),
