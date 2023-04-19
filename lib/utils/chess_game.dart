@@ -5,11 +5,11 @@ GameStateModel makeMove(String? fen, dynamic move, int player) {
   final chess = ch.Chess.fromFEN(fen);
 
   if (chess.move(move)) {
-    // if (chess.in_draw) {
-    //   return GameStateModel(fen: chess.fen, outcome: 0);
-    // } else if (chess.in_checkmate) {
-    //   return GameStateModel(fen: chess.fen, outcome: player + 1);
-    // }
+    if (chess.in_draw) {
+      return GameStateModel(fen: chess.fen, outcome: 0);
+    } else if (chess.in_checkmate) {
+      return GameStateModel(fen: chess.fen, outcome: player + 1);
+    }
     return GameStateModel(fen: chess.fen, outcome: -1);
   } else {
     return GameStateModel(fen: "invalid", outcome: -1);

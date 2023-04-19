@@ -62,6 +62,9 @@ class _HomeScreenState extends State<HomeScreen> {
               fen: _fen,
               size: size.width,
               onMove: (move) {
+                if (cur != -1) {
+                  return;
+                }
                 final state = makeMove(
                     _fen,
                     {
@@ -78,6 +81,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 } else if (state.outcome != -1) {
                   setState(() {
                     cur = state.outcome;
+                    _fen = state.fen;
+                    errMsg = "";
+                    player = 1 - player;
                   });
                 } else {
                   setState(() {
