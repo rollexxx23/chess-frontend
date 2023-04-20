@@ -1,11 +1,14 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:chess_game/models/auth/user_login.dart';
 import 'package:chess_game/models/auth/user_reg.dart';
 
+String baseURL = (kIsWeb) ? "http://localhost:5000/" : "http://10.0.2.2:5000/";
+
 class AuthServices {
   static loginUser(UserLoginModel model) async {
-    String url = "http://10.0.2.2:5000/login";
+    String url = "${baseURL}login";
     var bodyData = {"email": model.email, "password": model.password};
 
     var body = json.encode(bodyData);
