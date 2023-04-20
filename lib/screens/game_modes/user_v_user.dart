@@ -1,10 +1,10 @@
 // ignore_for_file: import_of_legacy_library_into_null_safe
 
-import 'package:chess_game/models/game/game_state.dart';
 import 'package:chess_game/utils/chess_game.dart' show makeMove;
 import 'package:flutter/material.dart';
 import "package:flutter_stateless_chessboard/flutter_stateless_chessboard.dart"
     show Chessboard;
+import 'package:flutter_stateless_chessboard/utils.dart';
 import 'package:get/get.dart';
 
 const List<String> outcomes = ["Draw", "White", "Black"];
@@ -19,6 +19,8 @@ class _UserVsScreenState extends State<UserVsScreen> {
   String errMsg = "";
   int player = 0;
   int cur = -1;
+  String blackOccupied = "";
+  String whiteOccupied = "";
   @override
   void initState() {
     _fen = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';
@@ -95,6 +97,7 @@ class _UserVsScreenState extends State<UserVsScreen> {
                     player = 1 - player;
                   });
                 } else {
+                  getOccupiedPieces(_fen, move);
                   setState(() {
                     _fen = state.fen;
                     errMsg = "";
@@ -103,7 +106,38 @@ class _UserVsScreenState extends State<UserVsScreen> {
                 }
               },
             ),
-            const SizedBox(height: 40),
+            const SizedBox(height: 20),
+            Container(
+              color: Color(0xff95BB4A),
+              height: 50,
+              child: Center(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        blackOccupied,
+                        style: const TextStyle(
+                            fontSize: 18,
+                            color: Colors.black,
+                            fontWeight: FontWeight.w500),
+                      ),
+                      Text(
+                        whiteOccupied,
+                        style: const TextStyle(
+                            fontSize: 18,
+                            color: Colors.white,
+                            fontWeight: FontWeight.w500),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
             Center(
               child: Text(
                 errMsg,
@@ -128,5 +162,21 @@ class _UserVsScreenState extends State<UserVsScreen> {
         ),
       ),
     );
+  }
+
+  void getOccupiedPieces(String? fen, dynamic move) {
+    final mp = getPieceMap(fen);
+    String p = mp[move.to].toString();
+    if (p != "null") {
+      if (p[0] == 'b') {
+        setState(() {
+          blackOccupied += p[1];
+        });
+      } else {
+        setState(() {
+          whiteOccupied += p[1];
+        });
+      }
+    }
   }
 }
