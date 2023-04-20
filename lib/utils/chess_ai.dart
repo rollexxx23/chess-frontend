@@ -5,7 +5,8 @@ import 'dart:math';
 import 'package:chess/chess.dart' as ch;
 import 'package:chess_game/models/game/chess_move_value.dart';
 
-ch.Move minimaxRoot(int depth, String fen, bool isMaximisingPlayer) {
+minimaxRoot(int depth, String fen, bool isMaximisingPlayer) {
+  print("called");
   final game = ch.Chess.fromFEN(fen);
 
   final moves = game.moves();
@@ -144,8 +145,8 @@ List<List<double>> kingEvalWhite = [
 
 List<List<double>> kingEvalBlack = (kingEvalWhite);
 
-num getPieceValue(ch.Piece piece, int x) {
-  if (piece.type == null) {
+num getPieceValue(ch.Piece? piece, int x) {
+  if (piece == null) {
     return 0;
   }
 

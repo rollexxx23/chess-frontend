@@ -1,3 +1,4 @@
+import 'package:chess_game/screens/game_modes/ai_mode.dart';
 import 'package:chess_game/screens/game_modes/user_v_user.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -75,6 +76,44 @@ class HomeScreen extends StatelessWidget {
                         ),
                         Text(
                           "Play against each other in \nsame device",
+                          style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.grey.withOpacity(0.7),
+                              fontWeight: FontWeight.w400),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(height: 10),
+            InkWell(
+              onTap: () {
+                Get.to(AiModeScreen());
+              },
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Image.asset("assets/chess.png"),
+                    const SizedBox(width: 8),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          "AI Mode",
+                          style: TextStyle(
+                              fontSize: 18,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w400),
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        Text(
+                          "Play against AI",
                           style: TextStyle(
                               fontSize: 14,
                               color: Colors.grey.withOpacity(0.7),

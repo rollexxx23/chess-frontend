@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:chess/chess.dart' as ch;
 import 'package:chess_game/models/game/game_state.dart';
+import 'package:chess_game/utils/chess_ai.dart';
 
 GameStateModel makeMove(String? fen, dynamic move, int player) {
   final chess = ch.Chess.fromFEN(fen);
@@ -14,4 +17,13 @@ GameStateModel makeMove(String? fen, dynamic move, int player) {
   } else {
     return GameStateModel(fen: "invalid", outcome: -1);
   }
+}
+
+GameStateModel makeAiMove(String fen, int player) {
+  var move = minimaxRoot(2, fen, true);
+
+  sleep(const Duration(seconds: 1));
+  GameStateModel res = makeMove(fen, move, player);
+  res.lastMove = move;
+  return res;
 }
