@@ -1,5 +1,6 @@
 import 'package:chess_game/models/auth/user_reg.dart';
 import 'package:chess_game/services/auth/auth_services.dart';
+import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -70,48 +71,68 @@ class _RegisterScreen3State extends State<RegisterScreen3> {
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.05,
                 ),
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Colors.transparent,
-                    border: Border.all(
-                      color: Colors.grey.withOpacity(0.7),
-                      width: 1,
-                    ),
-                  ),
-                  height: 50,
-                  width: MediaQuery.of(context).size.width - 100,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Icon(
-                          Icons.person,
-                          color: Colors.white,
-                        ),
-                        const SizedBox(width: 5),
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width - 150,
-                          // height: 30,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const SizedBox(
+                      width: 100,
+                      child: CountryCodePicker(
+                        onChanged: print,
+                        padding: EdgeInsets.all(2.0),
+                        backgroundColor: Colors.black,
+                        initialSelection: 'IN',
+                        textStyle: TextStyle(color: Colors.white),
+                        showCountryOnly: true,
+                        // optional. Shows only country name and flag when popup is closed.
+                        showOnlyCountryWhenClosed: true,
 
-                          child: TextField(
-                            style: const TextStyle(
+                        alignLeft: false,
+                      ),
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.transparent,
+                        border: Border.all(
+                          color: Colors.grey.withOpacity(0.7),
+                          width: 1,
+                        ),
+                      ),
+                      height: 50,
+                      width: MediaQuery.of(context).size.width - 150,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Icon(
+                              Icons.person,
                               color: Colors.white,
                             ),
-                            controller: userTextController,
-                            decoration: InputDecoration(
-                              border: InputBorder.none,
-                              hintText: 'Username',
-                              hintStyle: TextStyle(
-                                color: Colors.grey.withOpacity(0.7),
+                            const SizedBox(width: 5),
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width - 250,
+                              // height: 30,
+
+                              child: TextField(
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                ),
+                                controller: userTextController,
+                                decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  hintText: 'Username',
+                                  hintStyle: TextStyle(
+                                    color: Colors.grey.withOpacity(0.7),
+                                  ),
+                                ),
                               ),
                             ),
-                          ),
+                          ],
                         ),
-                      ],
+                      ),
                     ),
-                  ),
+                  ],
                 ),
                 const SizedBox(height: 30),
                 Text(

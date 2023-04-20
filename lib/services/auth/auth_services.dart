@@ -1,5 +1,8 @@
 import 'dart:convert';
+import 'package:chess_game/screens/home/home.dart';
 import 'package:flutter/foundation.dart';
+import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:chess_game/models/auth/user_login.dart';
 import 'package:chess_game/models/auth/user_reg.dart';
@@ -26,7 +29,9 @@ class AuthServices {
       if (jsonDecoded["message"] != null) {
         return jsonDecoded["message"];
       } else {
+        saveCred(jsonDecoded);
         print("LOGIN SUCCESSFUL");
+        Get.offAll(const HomeScreen());
       }
     } catch (e) {
       print("ERROR $e");
@@ -34,7 +39,7 @@ class AuthServices {
   }
 
   static registerUser(UserRegisterModel model) async {
-    String url = "http://10.0.2.2:5000/register";
+    String url = "${baseURL}register";
     var bodyData = {
       "email": model.email,
       "password": model.password,
@@ -63,4 +68,11 @@ class AuthServices {
       print("ERROR $e");
     }
   }
+}
+
+void saveCred(var json) {
+  final storage = GetStorage();
+  storage.write('loggedIn', true);
+  print(json["access_token"]);
+  storage.write('accessToken', json["access_token"]);
 }

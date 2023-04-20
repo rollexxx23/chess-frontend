@@ -39,6 +39,8 @@ dependencies:
   http: ^0.13.5
   flutter_stateless_chessboard: ^0.0.2
   chess: ^0.6.5
+  get_storage: ^2.1.1
+  country_code_picker: ^3.0.0
 
 dev_dependencies:
   flutter_test:

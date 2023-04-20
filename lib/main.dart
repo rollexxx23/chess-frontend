@@ -1,8 +1,13 @@
 import 'package:chess_game/screens/home/home.dart';
+import 'package:chess_game/screens/register/register3.dart';
+import 'package:chess_game/screens/welcome/welcome.dart';
+import 'package:chess_game/splashscreen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:get_storage/get_storage.dart';
 
-void main() {
+void main() async {
+  await GetStorage.init();
   runApp(const MyApp());
 }
 
@@ -17,6 +22,6 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: HomeScreen());
+        home: WelcomeScreen());
   }
 }
