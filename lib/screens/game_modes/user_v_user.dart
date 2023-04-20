@@ -19,8 +19,8 @@ class _UserVsScreenState extends State<UserVsScreen> {
   String errMsg = "";
   int player = 0;
   int cur = -1;
-  String blackOccupied = "";
-  String whiteOccupied = "";
+  List<Widget> blackOccupied = [];
+  List<Widget> whiteOccupied = [];
   @override
   void initState() {
     _fen = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';
@@ -108,28 +108,34 @@ class _UserVsScreenState extends State<UserVsScreen> {
             ),
             const SizedBox(height: 20),
             Container(
-              color: Color(0xff95BB4A),
+              color: Colors.black,
               height: 50,
               child: Center(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 15.0),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Text(
-                        blackOccupied,
-                        style: const TextStyle(
-                            fontSize: 18,
-                            color: Colors.black,
-                            fontWeight: FontWeight.w500),
-                      ),
-                      Text(
-                        whiteOccupied,
-                        style: const TextStyle(
-                            fontSize: 18,
-                            color: Colors.white,
-                            fontWeight: FontWeight.w500),
-                      ),
+                      Row(
+                        children: whiteOccupied,
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              color: Colors.white,
+              height: 50,
+              child: Center(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: blackOccupied,
+                      )
                     ],
                   ),
                 ),
@@ -170,11 +176,15 @@ class _UserVsScreenState extends State<UserVsScreen> {
     if (p != "null") {
       if (p[0] == 'b') {
         setState(() {
-          blackOccupied += p[1];
+          blackOccupied.insert(
+            blackOccupied.length,
+            Image.asset("assets/pieces/$p.png", height: 30, width: 30),
+          );
         });
       } else {
         setState(() {
-          whiteOccupied += p[1];
+          whiteOccupied.insert(whiteOccupied.length,
+              Image.asset("assets/pieces/$p.png", height: 30, width: 30));
         });
       }
     }
