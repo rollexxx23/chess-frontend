@@ -15,17 +15,3 @@ GameStateModel makeMove(String? fen, dynamic move, int player) {
     return GameStateModel(fen: "invalid", outcome: -1);
   }
 }
-
-String? getRandomMove(String? fen) {
-  final chess = ch.Chess.fromFEN(fen);
-
-  final moves = chess.moves();
-
-  if (moves.isEmpty) {
-    return null;
-  }
-
-  moves.shuffle();
-
-  return moves.first;
-}
