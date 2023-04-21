@@ -16,6 +16,7 @@ class RegisterScreen3 extends StatefulWidget {
 class _RegisterScreen3State extends State<RegisterScreen3> {
   TextEditingController userTextController = TextEditingController();
   String errorMsg = "";
+  String country = "IN";
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -150,6 +151,7 @@ class _RegisterScreen3State extends State<RegisterScreen3> {
                   onTap: () async {
                     String? msg = await AuthServices.registerUser(
                         UserRegisterModel(
+                            country: country,
                             email: widget.email,
                             password: widget.password,
                             username: userTextController.text));
@@ -184,5 +186,10 @@ class _RegisterScreen3State extends State<RegisterScreen3> {
         ),
       ),
     );
+  }
+
+  void onCountryChange(CountryCode countryCode) {
+    country = countryCode.name.toString();
+    print("New Country selected: ${countryCode.name}");
   }
 }

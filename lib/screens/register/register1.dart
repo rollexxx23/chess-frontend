@@ -11,6 +11,7 @@ class RegisterScreen1 extends StatefulWidget {
 
 class _RegisterScreen1State extends State<RegisterScreen1> {
   TextEditingController emailTextController = TextEditingController();
+  String errorMsg = "";
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -82,6 +83,9 @@ class _RegisterScreen1State extends State<RegisterScreen1> {
                             style: const TextStyle(
                               color: Colors.white,
                             ),
+                            onChanged: (val) {
+                              validEmail(val);
+                            },
                             controller: emailTextController,
                             decoration: InputDecoration(
                               border: InputBorder.none,
@@ -96,22 +100,34 @@ class _RegisterScreen1State extends State<RegisterScreen1> {
                     ),
                   ),
                 ),
+                const SizedBox(height: 30),
+                Text(
+                  errorMsg,
+                  style: const TextStyle(
+                      fontSize: 15,
+                      color: Colors.red,
+                      fontWeight: FontWeight.w500),
+                )
               ],
             ),
             Column(
               children: [
                 InkWell(
-                  onTap: () {
-                    Get.to(RegisterScreen2(
-                      email: emailTextController.text,
-                    ));
-                  },
+                  onTap: (checkEmail(emailTextController.text))
+                      ? () {
+                          Get.to(RegisterScreen2(
+                            email: emailTextController.text,
+                          ));
+                        }
+                      : null,
                   child: Container(
                     height: 50,
                     width: MediaQuery.of(context).size.width - 100,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
-                      color: const Color(0xff95BB4A),
+                      color: (checkEmail(emailTextController.text))
+                          ? const Color(0xff95BB4A)
+                          : Colors.grey,
                     ),
                     child: const Center(
                       child: Text(
@@ -131,5 +147,34 @@ class _RegisterScreen1State extends State<RegisterScreen1> {
         ),
       ),
     );
+  }
+
+  void validEmail(String email) {
+    if (email.isEmpty) {
+      setState(() {
+        errorMsg = "Email cannot be blank";
+      });
+    } else if (!RegExp(
+            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+        .hasMatch(email)) {
+      setState(() {
+        errorMsg = "Invalid email";
+      });
+    } else {
+      setState(() {
+        errorMsg = "";
+      });
+    }
+  }
+
+  bool checkEmail(String email) {
+    if (email.isEmpty) {
+      return false;
+    } else if (RegExp(
+            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+        .hasMatch(email)) {
+      return true;
+    }
+    return false;
   }
 }

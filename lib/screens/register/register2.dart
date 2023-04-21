@@ -13,6 +13,7 @@ class RegisterScreen2 extends StatefulWidget {
 class _RegisterScreen2State extends State<RegisterScreen2> {
   TextEditingController pwTextController = TextEditingController();
   TextEditingController cpwTextController = TextEditingController();
+  String errorMsg = "";
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -81,6 +82,12 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
                           // height: 30,
 
                           child: TextField(
+                            onChanged: (val) {
+                              checkPw(
+                                val,
+                                cpwTextController.text,
+                              );
+                            },
                             style: const TextStyle(
                               color: Colors.white,
                             ),
@@ -125,6 +132,12 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
                           // height: 30,
 
                           child: TextField(
+                            onChanged: (val) {
+                              checkPw(
+                                val,
+                                pwTextController.text,
+                              );
+                            },
                             style: const TextStyle(
                               color: Colors.white,
                             ),
@@ -142,6 +155,14 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
                     ),
                   ),
                 ),
+                const SizedBox(height: 30),
+                Text(
+                  errorMsg,
+                  style: const TextStyle(
+                      fontSize: 15,
+                      color: Colors.red,
+                      fontWeight: FontWeight.w500),
+                )
               ],
             ),
             Column(
@@ -160,9 +181,11 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
                     height: 50,
                     width: MediaQuery.of(context).size.width - 100,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: const Color(0xff95BB4A),
-                    ),
+                        borderRadius: BorderRadius.circular(10),
+                        color: (validPw(
+                                pwTextController.text, cpwTextController.text))
+                            ? const Color(0xff95BB4A)
+                            : Colors.grey),
                     child: const Center(
                       child: Text(
                         'Continue',
@@ -181,6 +204,22 @@ class _RegisterScreen2State extends State<RegisterScreen2> {
         ),
       ),
     );
+  }
+
+  void checkPw(String pw, String cpw) {
+    if (pw.length < 8) {
+      setState(() {
+        errorMsg = "Password needs to be 8 chracters";
+      });
+    } else if (pw != cpw) {
+      setState(() {
+        errorMsg = "Password not matching";
+      });
+    } else {
+      setState(() {
+        errorMsg = "";
+      });
+    }
   }
 }
 

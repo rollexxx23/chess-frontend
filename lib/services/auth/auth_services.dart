@@ -62,7 +62,13 @@ class AuthServices {
       if (jsonDecoded["message"] != null) {
         return jsonDecoded["message"];
       } else {
-        print("LOGIN SUCCESSFUL");
+        print("REGISTER SUCCESSFUL");
+        try {
+          loginUser(
+              UserLoginModel(email: model.email, password: model.password));
+        } catch (e) {
+          print("ERROR $e");
+        }
       }
     } catch (e) {
       print("ERROR $e");
