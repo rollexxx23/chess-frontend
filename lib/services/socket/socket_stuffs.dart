@@ -6,6 +6,7 @@ import 'package:chess_game/utils/chess_game.dart';
 import 'package:chess_game/utils/getx_controller.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_stateless_chessboard/utils.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:web_socket_channel/io.dart';
@@ -14,7 +15,7 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 class SocketStuffs {
   late WebSocketChannel channel;
   late String email;
-  final CurrentFenController controller = Get.put(CurrentFenController());
+  static CurrentFenController controller = Get.put(CurrentFenController());
   SocketStuffs() {
     init();
     readMessages();

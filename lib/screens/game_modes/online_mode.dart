@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'package:chess_game/models/game/online_game.dart';
 import 'package:chess_game/utils/chess_game.dart' show makeMove;
 import 'package:chess_game/utils/getx_controller.dart';
+import 'package:chess_game/utils/occupied_pieces.dart';
 import 'package:flutter/material.dart';
 import "package:flutter_stateless_chessboard/flutter_stateless_chessboard.dart"
     show Chessboard;
@@ -27,8 +28,6 @@ class _OnlineModeState extends State<OnlineMode> {
   final CurrentFenController controller = Get.put(CurrentFenController());
   String errMsg = "";
 
-  List<Widget> blackOccupied = [];
-  List<Widget> whiteOccupied = [];
   @override
   void initState() {
     controller.updateCurrentFen(
@@ -132,7 +131,7 @@ class _OnlineModeState extends State<OnlineMode> {
                     } else {
                       // send move
                       sendMoves(move);
-                      getOccupiedPieces(controller.fen, move);
+                      OccupiedPieces.getOccupiedPieces(controller.fen, move);
                       setState(() {
                         controller.updateCurrentFen(state.fen ?? "");
                         errMsg = "";
@@ -152,7 +151,7 @@ class _OnlineModeState extends State<OnlineMode> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Row(
-                            children: whiteOccupied,
+                            children: controller.getWhite,
                           )
                         ],
                       ),
@@ -169,7 +168,7 @@ class _OnlineModeState extends State<OnlineMode> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Row(
-                            children: blackOccupied,
+                            children: controller.getBlack,
                           )
                         ],
                       ),
@@ -203,26 +202,6 @@ class _OnlineModeState extends State<OnlineMode> {
             ),
           ),
         )));
-  }
-
-  void getOccupiedPieces(String? fen, dynamic move) {
-    final mp = getPieceMap(fen);
-    String p = mp[move.to].toString();
-    if (p != "null") {
-      if (p[0] == 'b') {
-        setState(() {
-          blackOccupied.insert(
-            blackOccupied.length,
-            Image.asset("assets/pieces/$p.png", height: 30, width: 30),
-          );
-        });
-      } else {
-        setState(() {
-          whiteOccupied.insert(whiteOccupied.length,
-              Image.asset("assets/pieces/$p.png", height: 30, width: 30));
-        });
-      }
-    }
   }
 
   bool isValidMove(String? fen, dynamic move) {
