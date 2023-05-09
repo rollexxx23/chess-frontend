@@ -29,7 +29,7 @@ class AuthServices {
       if (jsonDecoded["message"] != null) {
         return jsonDecoded["message"];
       } else {
-        saveCred(jsonDecoded);
+        saveCred(jsonDecoded, model.email);
         print("LOGIN SUCCESSFUL");
         Get.offAll(const HomeScreen());
       }
@@ -44,7 +44,8 @@ class AuthServices {
       "email": model.email,
       "password": model.password,
       "username": model.username,
-      "name": ""
+      "name": "",
+      "country": model.country
     };
 
     var body = json.encode(bodyData);
@@ -76,9 +77,10 @@ class AuthServices {
   }
 }
 
-void saveCred(var json) {
+void saveCred(var json, String email) {
   final storage = GetStorage();
   storage.write('loggedIn', true);
   print(json["access_token"]);
   storage.write('accessToken', json["access_token"]);
+  storage.write('email', email);
 }

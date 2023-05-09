@@ -75,14 +75,14 @@ class _RegisterScreen3State extends State<RegisterScreen3> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const SizedBox(
+                    SizedBox(
                       width: 100,
                       child: CountryCodePicker(
-                        onChanged: print,
-                        padding: EdgeInsets.all(2.0),
+                        onChanged: onCountryChange,
+                        padding: const EdgeInsets.all(2.0),
                         backgroundColor: Colors.black,
                         initialSelection: 'IN',
-                        textStyle: TextStyle(color: Colors.white),
+                        textStyle: const TextStyle(color: Colors.white),
                         showCountryOnly: true,
                         // optional. Shows only country name and flag when popup is closed.
                         showOnlyCountryWhenClosed: true,
@@ -189,7 +189,7 @@ class _RegisterScreen3State extends State<RegisterScreen3> {
   }
 
   void onCountryChange(CountryCode countryCode) {
-    country = countryCode.name.toString();
-    print("New Country selected: ${countryCode.name}");
+    country = countryCode.code.toString();
+    print("New Country selected: ${countryCode.code}");
   }
 }

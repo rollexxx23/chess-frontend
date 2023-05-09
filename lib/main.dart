@@ -1,10 +1,8 @@
-import 'package:chess_game/screens/home/home.dart';
-import 'package:chess_game/screens/register/register3.dart';
-import 'package:chess_game/screens/welcome/welcome.dart';
 import 'package:chess_game/splashscreen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 void main() async {
   await GetStorage.init();
@@ -18,10 +16,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+        builder: EasyLoading.init(),
         title: 'Flutter Demo',
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: WelcomeScreen());
+        home: const SplashScreen());
   }
 }

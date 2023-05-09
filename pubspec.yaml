@@ -41,6 +41,8 @@ dependencies:
   chess: ^0.6.5
   get_storage: ^2.1.1
   country_code_picker: ^3.0.0
+  flutter_easyloading: ^3.0.5
+  web_socket_channel: ^2.4.0
 
 dev_dependencies:
   flutter_test:
