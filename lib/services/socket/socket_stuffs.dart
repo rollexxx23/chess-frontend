@@ -4,8 +4,10 @@ import 'package:chess_game/models/game/online_game.dart';
 import 'package:chess_game/screens/game_modes/online_mode.dart';
 import 'package:chess_game/utils/chess_game.dart';
 import 'package:chess_game/utils/getx_controller.dart';
+import 'package:chess_game/utils/occupied_pieces.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_stateless_chessboard/flutter_stateless_chessboard.dart';
 import 'package:flutter_stateless_chessboard/utils.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -93,7 +95,9 @@ class SocketStuffs {
 
       controller.alterPlayer();
     } else {
-      //getOccupiedPieces(controller.fen, move);
+      ShortMove move =
+          ShortMove(from: jsonDecoded["src"], to: jsonDecoded["des"]);
+      OccupiedPieces.getOccupiedPieces(controller.fen, move);
       controller.updateCurrentFen(state.fen ?? "");
       controller.alterPlayer();
     }
