@@ -7,8 +7,8 @@ import 'package:chess_game/utils/getx_controller.dart';
 import 'package:chess_game/utils/occupied_pieces.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:flutter_stateless_chessboard/flutter_stateless_chessboard.dart';
-import 'package:flutter_stateless_chessboard/utils.dart';
+import "package:flutter_stateless_chessboard/flutter_stateless_chessboard.dart"
+    show ShortMove;
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:web_socket_channel/io.dart';
