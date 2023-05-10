@@ -12,6 +12,7 @@ String baseURL = (kIsWeb) ? "http://localhost:5000/" : "http://10.0.2.2:5000/";
 class AuthServices {
   static loginUser(UserLoginModel model) async {
     String url = "${baseURL}login";
+    print(url);
     var bodyData = {"email": model.email, "password": model.password};
 
     var body = json.encode(bodyData);
@@ -19,13 +20,16 @@ class AuthServices {
     try {
       var data = await http.post(
         Uri.parse(url),
-        headers: {"Content-Type": "application/json"},
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: body,
       );
 
       // #### OUTPUT ####
+      print(data.body);
       var jsonDecoded = await json.decode(data.body);
-      // print(jsonDecoded);
+
       if (jsonDecoded["message"] != null) {
         return jsonDecoded["message"];
       } else {
@@ -53,7 +57,12 @@ class AuthServices {
     try {
       var data = await http.post(
         Uri.parse(url),
-        headers: {"Content-Type": "application/json"},
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods":
+              "POST, GET, OPTIONS, PUT, DELETE, HEAD",
+        },
         body: body,
       );
 
