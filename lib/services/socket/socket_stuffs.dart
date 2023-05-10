@@ -11,7 +11,6 @@ import "package:flutter_stateless_chessboard/flutter_stateless_chessboard.dart"
     show ShortMove;
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:web_socket_channel/io.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 class SocketStuffs {
@@ -20,15 +19,20 @@ class SocketStuffs {
   static CurrentFenController controller = Get.put(CurrentFenController());
   SocketStuffs() {
     init();
+    //sleep(const Duration(milliseconds: 10));
     readMessages();
   }
 
   init() async {
     try {
-      channel = IOWebSocketChannel.connect(
-          (kIsWeb) ? "ws://localhost:5000/lobby" : "ws://10.0.2.2:5000/lobby",
-          connectTimeout: const Duration(days: 1));
-      print('Connected to: ${channel.toString()}');
+      channel = (kIsWeb)
+          ? WebSocketChannel.connect(
+              Uri.parse("ws://localhost:5000/lobby"),
+            )
+          : WebSocketChannel.connect(
+              Uri.parse("ws://10.0.2.2:5000/lobby"),
+            );
+
       final storage = GetStorage();
       email = storage.read('email') ?? "";
 
