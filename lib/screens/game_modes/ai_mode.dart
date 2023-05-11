@@ -3,6 +3,7 @@
 import 'dart:io';
 
 import 'package:chess_game/utils/chess_game.dart' show makeAiMove, makeMove;
+import 'package:chess_game/widgets/forfeit_game.dart';
 import 'package:flutter/material.dart';
 import "package:flutter_stateless_chessboard/flutter_stateless_chessboard.dart"
     show Chessboard;
@@ -49,7 +50,7 @@ class _AiModeScreenState extends State<AiModeScreen> {
                 children: [
                   InkWell(
                     onTap: () {
-                      Get.back();
+                      showForfeit(context);
                     },
                     child: const Icon(
                       Icons.arrow_back_ios,
