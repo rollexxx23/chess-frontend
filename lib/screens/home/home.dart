@@ -56,7 +56,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     InkWell(
                       onTap: () {
-                        Get.to(const ProfileScreen());
+                        final storage = GetStorage();
+                        String userEmail = storage.read('email') ?? "false";
+                        print(userEmail);
+                        Get.to(ProfileScreen(email: userEmail));
                       },
                       child: const Text(
                         "Profile",

@@ -6,7 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({Key? key}) : super(key: key);
+  ProfileScreen({Key? key, required this.email}) : super(key: key);
+  String email;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +19,7 @@ class ProfileScreen extends StatelessWidget {
           child: Column(
             children: [
               FutureBuilder(
-                  future: ProfileAPI().getProfileDetails("arin2@gmail.com"),
+                  future: ProfileAPI().getProfileDetails(email),
                   builder: (BuildContext context,
                       AsyncSnapshot<ProfileModel?> snapshot) {
                     switch (snapshot.connectionState) {
@@ -170,8 +171,7 @@ class ProfileScreen extends StatelessWidget {
                     }
                   }),
               FutureBuilder(
-                  future: ProfileAPI()
-                      .getMatchList("arin2@gmail.com"), // async work
+                  future: ProfileAPI().getMatchList(email), // async work
                   builder: (BuildContext context,
                       AsyncSnapshot<List<MatchModel>> snapshot) {
                     switch (snapshot.connectionState) {
@@ -183,9 +183,9 @@ class ProfileScreen extends StatelessWidget {
                         } else {
                           return Column(
                             children: [
-                              const Text(
-                                "Completed Games (0)",
-                                style: TextStyle(
+                              Text(
+                                "Completed Games (${snapshot.data!.length})",
+                                style: const TextStyle(
                                     color: Colors.white, fontSize: 14),
                               ),
                               const SizedBox(height: 10),
