@@ -1,6 +1,5 @@
-import 'dart:io';
-
 import 'package:chess_game/screens/game_modes/ai_mode.dart';
+import 'package:chess_game/screens/game_modes/ai_setting_screen.dart';
 import 'package:chess_game/screens/game_modes/user_v_user.dart';
 import 'package:chess_game/screens/profile/profile.dart';
 import 'package:chess_game/services/socket/socket_stuffs.dart';
@@ -115,7 +114,7 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(height: 25),
               InkWell(
                 onTap: () {
-                  Get.to(AiModeScreen());
+                  Get.to(AISettingScreen());
                 },
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 15),
