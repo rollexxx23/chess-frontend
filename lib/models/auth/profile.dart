@@ -5,6 +5,7 @@ class ProfileModel {
   int winCnt;
   int drawCnt;
   int lossCnt;
+  String dateJoined;
 
   ProfileModel(
       {required this.country,
@@ -12,5 +13,6 @@ class ProfileModel {
       required this.email,
       required this.lossCnt,
       required this.username,
+      required this.dateJoined,
       required this.winCnt});
 }

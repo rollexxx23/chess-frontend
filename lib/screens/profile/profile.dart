@@ -1,4 +1,5 @@
 import 'package:chess_game/models/auth/profile.dart';
+import 'package:chess_game/models/game/match.dart';
 import 'package:chess_game/services/profile/profile_api.dart';
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
@@ -56,11 +57,12 @@ class ProfileScreen extends StatelessWidget {
                                         width: 100,
                                         height: 100,
                                         color: const Color(0xffEC407A),
-                                        child: const Center(
+                                        child: Center(
                                           child: Text(
-                                            'A',
-                                            style:
-                                                TextStyle(color: Colors.white),
+                                            snapshot.data!.username[0]
+                                                .toUpperCase(),
+                                            style: const TextStyle(
+                                                color: Colors.white),
                                           ),
                                         ),
                                       ),
@@ -98,11 +100,11 @@ class ProfileScreen extends StatelessWidget {
                                         alignLeft: false,
                                       ),
                                       Row(
-                                        children: const [
-                                          SizedBox(width: 5),
+                                        children: [
+                                          const SizedBox(width: 5),
                                           Text(
-                                            "Joined: 14/10/23",
-                                            style: TextStyle(
+                                            "Joined: ${snapshot.data!.dateJoined}",
+                                            style: const TextStyle(
                                                 color: Colors.white,
                                                 fontSize: 12),
                                           ),
@@ -123,6 +125,13 @@ class ProfileScreen extends StatelessWidget {
                                         3,
                                     height: 40,
                                     color: Colors.green,
+                                    child: Center(
+                                      child: Text(
+                                        "${snapshot.data!.winCnt}",
+                                        style: const TextStyle(
+                                            color: Colors.white, fontSize: 12),
+                                      ),
+                                    ),
                                   ),
                                   Container(
                                     width: (MediaQuery.of(context).size.width -
@@ -130,6 +139,13 @@ class ProfileScreen extends StatelessWidget {
                                         3,
                                     height: 40,
                                     color: Colors.orange,
+                                    child: Center(
+                                      child: Text(
+                                        "${snapshot.data!.drawCnt}",
+                                        style: const TextStyle(
+                                            color: Colors.white, fontSize: 12),
+                                      ),
+                                    ),
                                   ),
                                   Container(
                                     width: (MediaQuery.of(context).size.width -
@@ -137,6 +153,13 @@ class ProfileScreen extends StatelessWidget {
                                         3,
                                     height: 40,
                                     color: Colors.red,
+                                    child: Center(
+                                      child: Text(
+                                        "${snapshot.data!.lossCnt}",
+                                        style: const TextStyle(
+                                            color: Colors.white, fontSize: 12),
+                                      ),
+                                    ),
                                   )
                                 ],
                               ),
@@ -146,26 +169,43 @@ class ProfileScreen extends StatelessWidget {
                         }
                     }
                   }),
-              Column(
-                children: [
-                  const Text(
-                    "Completed Games (0)",
-                    style: TextStyle(color: Colors.white, fontSize: 14),
-                  ),
-                  const SizedBox(height: 10),
-                  ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: 5,
-                      itemBuilder: (context, index) {
-                        return InkWell(
-                            onTap: () {},
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: matchWidget(),
-                            ));
-                      }),
-                ],
-              )
+              FutureBuilder(
+                  future: ProfileAPI()
+                      .getMatchList("arin2@gmail.com"), // async work
+                  builder: (BuildContext context,
+                      AsyncSnapshot<List<MatchModel>> snapshot) {
+                    switch (snapshot.connectionState) {
+                      case ConnectionState.waiting:
+                        return const Text('Loading....');
+                      default:
+                        if (snapshot.hasError) {
+                          return Text('Error: ${snapshot.error}');
+                        } else {
+                          return Column(
+                            children: [
+                              const Text(
+                                "Completed Games (0)",
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 14),
+                              ),
+                              const SizedBox(height: 10),
+                              ListView.builder(
+                                  shrinkWrap: true,
+                                  itemCount: snapshot.data!.length,
+                                  itemBuilder: (context, index) {
+                                    return InkWell(
+                                        onTap: () {},
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: matchWidget(
+                                              snapshot.data![index]),
+                                        ));
+                                  }),
+                            ],
+                          );
+                        }
+                    }
+                  })
             ],
           ),
         ),
@@ -174,7 +214,7 @@ class ProfileScreen extends StatelessWidget {
   }
 }
 
-Widget matchWidget() {
+Widget matchWidget(MatchModel model) {
   return Container(
     height: 50,
     color: const Color(0xff747474),
@@ -187,31 +227,32 @@ Widget matchWidget() {
           children: [
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
-                  children: const [
-                    Icon(
+                  children: [
+                    const Icon(
                       Icons.square,
                       color: Colors.white,
                       size: 15,
                     ),
                     Text(
-                      "arinc23",
-                      style: TextStyle(color: Colors.white, fontSize: 14),
+                      model.whitePlayerUserName,
+                      style: const TextStyle(color: Colors.white, fontSize: 14),
                     ),
                   ],
                 ),
                 const SizedBox(height: 10),
                 Row(
-                  children: const [
-                    Icon(
+                  children: [
+                    const Icon(
                       Icons.square,
                       color: Colors.black,
                       size: 15,
                     ),
                     Text(
-                      "arinc23",
-                      style: TextStyle(color: Colors.white, fontSize: 14),
+                      model.blackPlayerUserName,
+                      style: const TextStyle(color: Colors.white, fontSize: 14),
                     ),
                   ],
                 ),
@@ -219,15 +260,15 @@ Widget matchWidget() {
             ),
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
-              children: const [
+              children: [
                 Text(
-                  "1-0",
-                  style: TextStyle(color: Colors.green, fontSize: 14),
+                  model.comment,
+                  style: const TextStyle(color: Colors.green, fontSize: 14),
                 ),
-                SizedBox(width: 10),
+                const SizedBox(width: 10),
                 Text(
-                  "(35 moves)",
-                  style: TextStyle(color: Colors.white, fontSize: 14),
+                  "(${model.moves} moves)",
+                  style: const TextStyle(color: Colors.white, fontSize: 14),
                 ),
               ],
             ),
