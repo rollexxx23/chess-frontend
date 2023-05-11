@@ -4,7 +4,7 @@ import 'package:chess_game/models/game/game_state.dart';
 import 'package:http/http.dart' as http;
 
 class GetMoves {
-  String baseUrl = "https://www.chessdb.cn/cdb.php?action=querybest&board=";
+  String baseUrl = "https://www.chessdb.cn/cdb.php?action=querypv&board=";
   getMove(String fen, int player) async {
     String url = "$baseUrl$fen";
     try {
