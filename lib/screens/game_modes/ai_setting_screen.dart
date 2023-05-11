@@ -1,4 +1,6 @@
+import 'package:chess_game/screens/game_modes/ai_mode.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class AISettingScreen extends StatefulWidget {
   AISettingScreen({Key? key}) : super(key: key);
@@ -207,20 +209,25 @@ class _AISettingScreenState extends State<AISettingScreen> {
               ],
             ),
             const SizedBox(height: 100),
-            Container(
-              height: 50,
-              width: MediaQuery.of(context).size.width - 100,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: const Color(0xff95BB4A),
-              ),
-              child: const Center(
-                child: Text(
-                  'Continue',
-                  style: TextStyle(
-                      fontWeight: FontWeight.w700,
-                      color: Colors.white,
-                      fontSize: 18),
+            InkWell(
+              onTap: () {
+                Get.to(AiModeScreen(difficulty: difficulty, isWhite: isWhite));
+              },
+              child: Container(
+                height: 50,
+                width: MediaQuery.of(context).size.width - 100,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: const Color(0xff95BB4A),
+                ),
+                child: const Center(
+                  child: Text(
+                    'Continue',
+                    style: TextStyle(
+                        fontWeight: FontWeight.w700,
+                        color: Colors.white,
+                        fontSize: 18),
+                  ),
                 ),
               ),
             ),

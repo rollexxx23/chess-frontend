@@ -9,10 +9,15 @@ import "package:flutter_stateless_chessboard/flutter_stateless_chessboard.dart"
     show Chessboard;
 import 'package:flutter_stateless_chessboard/utils.dart';
 import 'package:get/get.dart';
+import 'package:flutter_stateless_chessboard/types.dart' as types;
 
 const List<String> outcomes = ["Draw", "White", "Black"];
 
 class AiModeScreen extends StatefulWidget {
+  @override
+  AiModeScreen({super.key, required this.difficulty, required this.isWhite});
+  int difficulty;
+  bool isWhite;
   @override
   _AiModeScreenState createState() => _AiModeScreenState();
 }
@@ -30,6 +35,29 @@ class _AiModeScreenState extends State<AiModeScreen> {
     errMsg = "";
     player = 0;
     cur = -1;
+    if (widget.isWhite == false) {
+      final state = makeAiMove(_fen ?? "", player);
+      if (state.fen == "invalid") {
+        setState(() {
+          errMsg = "Invalid Move";
+        });
+      } else if (state.outcome != -1) {
+        setState(() {
+          cur = state.outcome;
+          _fen = state.fen;
+          errMsg = "";
+          player = 1 - player;
+        });
+      } else {
+        print(state.lastMove);
+        getOccupiedPieces(_fen, state.lastMove, true);
+        setState(() {
+          _fen = state.fen;
+          errMsg = "";
+          player = 1 - player;
+        });
+      }
+    }
     // TODO: implement initState
     super.initState();
   }
@@ -75,6 +103,8 @@ class _AiModeScreenState extends State<AiModeScreen> {
             Chessboard(
                 fen: _fen,
                 size: size.width,
+                orientation:
+                    (widget.isWhite) ? types.Color.WHITE : types.Color.BLACK,
                 onMove: (move) {
                   if (cur != -1) {
                     return;
