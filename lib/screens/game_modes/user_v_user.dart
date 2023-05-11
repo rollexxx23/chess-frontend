@@ -1,6 +1,8 @@
 // ignore_for_file: import_of_legacy_library_into_null_safe
 
 import 'package:chess_game/utils/chess_game.dart' show makeMove;
+import 'package:chess_game/widgets/forfeit_game.dart';
+import 'package:chess_game/widgets/rematch_dialog_box.dart';
 import 'package:flutter/material.dart';
 import "package:flutter_stateless_chessboard/flutter_stateless_chessboard.dart"
     show Chessboard;
@@ -21,12 +23,17 @@ class _UserVsScreenState extends State<UserVsScreen> {
   int cur = -1;
   List<Widget> blackOccupied = [];
   List<Widget> whiteOccupied = [];
+  double blackScore = 0.0;
+  double whiteScore = 0.0;
+
   @override
   void initState() {
     _fen = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';
     errMsg = "";
     player = 0;
     cur = -1;
+    blackScore = 0.0;
+    whiteScore = 0.0;
     // TODO: implement initState
     super.initState();
   }
@@ -47,7 +54,7 @@ class _UserVsScreenState extends State<UserVsScreen> {
                 children: [
                   InkWell(
                     onTap: () {
-                      Get.back();
+                      showForfeit(context);
                     },
                     child: const Icon(
                       Icons.arrow_back_ios,
@@ -90,12 +97,22 @@ class _UserVsScreenState extends State<UserVsScreen> {
                     errMsg = "Invalid Move";
                   });
                 } else if (state.outcome != -1) {
+                  // game over
                   setState(() {
                     cur = state.outcome;
                     _fen = state.fen;
                     errMsg = "";
                     player = 1 - player;
+                    if (state.outcome == 0) {
+                      blackScore += 0.5;
+                      whiteScore += 0.5;
+                    } else if (state.outcome == 1) {
+                      whiteScore += 1.0;
+                    } else {
+                      blackScore += 1.0;
+                    }
                   });
+                  showRematch(context, rematch);
                 } else {
                   getOccupiedPieces(_fen, move);
                   setState(() {
@@ -164,10 +181,30 @@ class _UserVsScreenState extends State<UserVsScreen> {
                     ),
                   )
                 : Container(),
+            (whiteScore != 0.0 || blackScore != 0.0)
+                ? Center(
+                    child: Text(
+                      "score: $whiteScore(white) - $blackScore(black)",
+                      style: const TextStyle(
+                          fontSize: 18,
+                          color: Colors.green,
+                          fontWeight: FontWeight.w500),
+                    ),
+                  )
+                : Container(),
           ],
         ),
       ),
     );
+  }
+
+  void rematch() {
+    setState(() {
+      _fen = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';
+      errMsg = "";
+      player = 0;
+      cur = -1;
+    });
   }
 
   void getOccupiedPieces(String? fen, dynamic move) {
