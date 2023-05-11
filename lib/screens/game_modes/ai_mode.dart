@@ -2,7 +2,8 @@
 
 import 'dart:io';
 
-import 'package:chess_game/utils/chess_game.dart' show makeAiMove, makeMove;
+import 'package:chess_game/utils/chess_game.dart'
+    show level2AI, makeAiMove, makeMove;
 import 'package:chess_game/widgets/forfeit_game.dart';
 import 'package:flutter/material.dart';
 import "package:flutter_stateless_chessboard/flutter_stateless_chessboard.dart"
@@ -50,7 +51,7 @@ class _AiModeScreenState extends State<AiModeScreen> {
         });
       } else {
         print(state.lastMove);
-        getOccupiedPieces(_fen, state.lastMove, true);
+        //   getOccupiedPieces(_fen, state.lastMove, true);
         setState(() {
           _fen = state.fen;
           errMsg = "";
@@ -132,7 +133,7 @@ class _AiModeScreenState extends State<AiModeScreen> {
                     });
                     return;
                   } else {
-                    getOccupiedPieces(_fen, move);
+                    //   getOccupiedPieces(_fen, move);
                     setState(() {
                       _fen = state.fen;
                       errMsg = "";
@@ -141,8 +142,11 @@ class _AiModeScreenState extends State<AiModeScreen> {
                   }
 
                   if (cur == -1) {
-                    Future.delayed(const Duration(milliseconds: 300)).then((_) {
-                      final state = makeAiMove(_fen ?? "", player);
+                    Future.delayed(const Duration(milliseconds: 300))
+                        .then((_) async {
+                      final state = (widget.difficulty == 1)
+                          ? makeAiMove(_fen ?? "", player)
+                          : await level2AI(_fen ?? "", player);
                       if (state.fen == "invalid") {
                         setState(() {
                           errMsg = "Invalid Move";
@@ -156,7 +160,7 @@ class _AiModeScreenState extends State<AiModeScreen> {
                         });
                       } else {
                         print(state.lastMove);
-                        getOccupiedPieces(_fen, state.lastMove, true);
+                        //  getOccupiedPieces(_fen, state.lastMove, true);
                         setState(() {
                           _fen = state.fen;
                           errMsg = "";
