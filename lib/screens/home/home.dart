@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:chess_game/screens/game_modes/ai_mode.dart';
 import 'package:chess_game/screens/game_modes/user_v_user.dart';
+import 'package:chess_game/screens/profile/profile.dart';
 import 'package:chess_game/services/socket/socket_stuffs.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -55,9 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     InkWell(
                       onTap: () {
-                        final storage = GetStorage();
-                        String userEmail = storage.read('email') ?? "false";
-                        print(userEmail);
+                        Get.to(const ProfileScreen());
                       },
                       child: const Text(
                         "Profile",
