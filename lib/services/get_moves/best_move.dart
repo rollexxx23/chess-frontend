@@ -4,9 +4,9 @@ import 'package:chess_game/models/game/game_state.dart';
 import 'package:http/http.dart' as http;
 
 class GetMoves {
-  String baseUrl = "https://www.chessdb.cn/cdb.php?action=querypv&board=";
-  getMove(String fen, int player) async {
-    String url = "$baseUrl$fen";
+  String baseUrl = "https://www.chessdb.cn/cdb.php?action=queryall&board=";
+  getMove(String fen, int player, int dif) async {
+    String url = "$baseUrl$fen&json=1";
     try {
       var data = await http.get(
         Uri.parse(url),
@@ -16,11 +16,15 @@ class GetMoves {
       );
 
       // #### OUTPUT ####
-      print(data.body);
-      print(data.body[5] + data.body[6]);
+      var jsonDecoded = await json.decode(data.body);
+      print(jsonDecoded);
+      if (jsonDecoded["status"] != "ok") return null;
+      int idx = (dif == 3) ? 0 : jsonDecoded["moves"].length() - 1;
       return {
-        "from": data.body[5] + data.body[6],
-        "to": data.body[7] + data.body[8],
+        "from": jsonDecoded["moves"][idx]["uci"][0] +
+            jsonDecoded["moves"][idx]["uci"][1],
+        "to": jsonDecoded["moves"][idx]["uci"][2] +
+            jsonDecoded["moves"][idx]["uci"][3],
         "promotion": "q"
       };
     } catch (e) {

@@ -133,7 +133,7 @@ class _AiModeScreenState extends State<AiModeScreen> {
                     });
                     return;
                   } else {
-                    //   getOccupiedPieces(_fen, move);
+                    getOccupiedPieces(_fen, move);
                     setState(() {
                       _fen = state.fen;
                       errMsg = "";
@@ -146,7 +146,8 @@ class _AiModeScreenState extends State<AiModeScreen> {
                         .then((_) async {
                       final state = (widget.difficulty == 1)
                           ? makeAiMove(_fen ?? "", player)
-                          : await level2AI(_fen ?? "", player);
+                          : await level2AI(
+                              _fen ?? "", player, widget.difficulty);
                       if (state.fen == "invalid") {
                         setState(() {
                           errMsg = "Invalid Move";
@@ -160,7 +161,7 @@ class _AiModeScreenState extends State<AiModeScreen> {
                         });
                       } else {
                         print(state.lastMove);
-                        //  getOccupiedPieces(_fen, state.lastMove, true);
+                        getOccupiedPieces(_fen, state.lastMove, true);
                         setState(() {
                           _fen = state.fen;
                           errMsg = "";

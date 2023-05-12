@@ -29,9 +29,11 @@ GameStateModel makeAiMove(String fen, int player) {
   return res;
 }
 
-Future<GameStateModel> level2AI(String fen, int player) async {
-  var move = await GetMoves().getMove(fen, player);
-  print(move["from"]);
+Future<GameStateModel> level2AI(String fen, int player, int dif) async {
+  var move = await GetMoves().getMove(fen, player, dif);
+  move = (move == null) ? minimaxRoot(2, fen, true) : move;
+
+  print(move);
   sleep(const Duration(seconds: 1));
   GameStateModel res = makeMove(fen, move, player);
   res.lastMove = move;
