@@ -1,9 +1,11 @@
 import 'package:chess_game/models/auth/profile.dart';
 import 'package:chess_game/models/game/match.dart';
+import 'package:chess_game/screens/welcome/welcome.dart';
 import 'package:chess_game/services/profile/profile_api.dart';
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 class ProfileScreen extends StatelessWidget {
   ProfileScreen({Key? key, required this.email}) : super(key: key);
@@ -42,6 +44,22 @@ class ProfileScreen extends StatelessWidget {
                                     child: const Icon(
                                       Icons.arrow_back_ios,
                                       color: Colors.white,
+                                    ),
+                                  ),
+                                  InkWell(
+                                    onTap: () {
+                                      final storage = GetStorage();
+                                      storage.write('loggedIn', false);
+
+                                      storage.write('accessToken', "");
+                                      storage.write('email', "");
+                                      Get.offAll(const WelcomeScreen());
+                                    },
+                                    child: const Text(
+                                      "Profile",
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w400),
                                     ),
                                   ),
                                 ],
