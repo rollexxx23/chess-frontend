@@ -2,10 +2,13 @@ import 'dart:convert';
 
 import 'package:chess_game/models/game/online_game.dart';
 import 'package:chess_game/screens/game_modes/online_mode.dart';
+import 'package:chess_game/screens/home/home.dart';
 import 'package:chess_game/utils/chess_game.dart';
 import 'package:chess_game/utils/getx_controller.dart';
 import 'package:chess_game/utils/occupied_pieces.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import "package:flutter_stateless_chessboard/flutter_stateless_chessboard.dart"
     show ShortMove;
@@ -49,6 +52,10 @@ class SocketStuffs {
 
   void readMessages() async {
     channel.stream.listen((event) async {
+      if (event.toString() == "game over") {
+        handleForfeit();
+        return;
+      }
       var jsonDecoded = await json.decode(event);
       if (jsonDecoded["message_type"] != null &&
           jsonDecoded["message_type"] == "GAME_INIT") {
@@ -105,5 +112,23 @@ class SocketStuffs {
       controller.updateCurrentFen(state.fen ?? "");
       controller.alterPlayer();
     }
+  }
+
+  void handleForfeit() {
+    Get.defaultDialog(
+        title: "Your Opponent Forfeited",
+        middleText: "You won the game.",
+        backgroundColor: Colors.grey,
+        titleStyle: const TextStyle(color: Colors.black),
+        middleTextStyle: const TextStyle(color: Colors.black),
+        actions: [
+          CupertinoDialogAction(
+              onPressed: () {
+                Get.back();
+              },
+              child: const Text("Yay")),
+        ],
+        radius: 30);
+    Get.offAll(const HomeScreen());
   }
 }

@@ -6,12 +6,15 @@ import 'package:chess_game/models/game/online_game.dart';
 import 'package:chess_game/utils/chess_game.dart' show makeMove;
 import 'package:chess_game/utils/getx_controller.dart';
 import 'package:chess_game/utils/occupied_pieces.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import "package:flutter_stateless_chessboard/flutter_stateless_chessboard.dart"
     show Chessboard;
 import 'package:flutter_stateless_chessboard/utils.dart';
 import 'package:get/get.dart';
 import 'package:flutter_stateless_chessboard/types.dart' as types;
+
+import '../home/home.dart';
 
 const List<String> outcomes = ["Draw", "White", "Black"];
 
@@ -56,7 +59,7 @@ class _OnlineModeState extends State<OnlineMode> {
                     children: [
                       InkWell(
                         onTap: () {
-                          Get.back();
+                          showForfeitOnline(context);
                         },
                         child: const Icon(
                           Icons.arrow_back_ios,
@@ -227,5 +230,48 @@ class _OnlineModeState extends State<OnlineMode> {
     String msg = json.encode(bodyData).toString();
     print(msg);
     widget.model.channel.sink.add(msg);
+  }
+
+  void sendForfeit() {
+    var bodyData = {
+      "email": widget.model.myEmail,
+      "token": "1224",
+      "game_id": widget.model.id,
+      "src": "",
+      "des": "",
+      "prom": ""
+    };
+
+    String msg = json.encode(bodyData).toString();
+    print(msg);
+    widget.model.channel.sink.add(msg);
+    widget.model.channel.sink.close();
+  }
+
+  Future<void> showForfeitOnline(BuildContext context,
+      [bool isOnline = false]) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: true, // user must tap button!
+      builder: (BuildContext context) {
+        return CupertinoAlertDialog(
+          title: const Text("Forfeit?"),
+          actions: [
+            CupertinoDialogAction(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text("Back")),
+            CupertinoDialogAction(
+                onPressed: () {
+                  sendForfeit();
+                  Get.offAll(const HomeScreen());
+                },
+                child: const Text("Yes")),
+          ],
+          content: const Text("You will lose the game"),
+        );
+      },
+    );
   }
 }

@@ -56,7 +56,7 @@ class ProfileScreen extends StatelessWidget {
                                       Get.offAll(const WelcomeScreen());
                                     },
                                     child: const Text(
-                                      "Profile",
+                                      "Logout",
                                       style: TextStyle(
                                           color: Colors.white,
                                           fontWeight: FontWeight.w400),
@@ -216,7 +216,7 @@ class ProfileScreen extends StatelessWidget {
                                         child: Padding(
                                           padding: const EdgeInsets.all(8.0),
                                           child: matchWidget(
-                                              snapshot.data![index]),
+                                              snapshot.data![index], email),
                                         ));
                                   }),
                             ],
@@ -232,7 +232,7 @@ class ProfileScreen extends StatelessWidget {
   }
 }
 
-Widget matchWidget(MatchModel model) {
+Widget matchWidget(MatchModel model, String email) {
   return Container(
     height: 50,
     color: const Color(0xff747474),
@@ -280,8 +280,21 @@ Widget matchWidget(MatchModel model) {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  model.comment,
-                  style: const TextStyle(color: Colors.green, fontSize: 14),
+                  ((model.result == 0 && model.blackPlayer == email) ||
+                          (model.result == 1 && model.whitePlayer == email))
+                      ? "Won"
+                      : (model.result == 2)
+                          ? "Draw"
+                          : "Lost",
+                  style: TextStyle(
+                      color: ((model.result == 0 &&
+                                  model.blackPlayer == email) ||
+                              (model.result == 1 && model.whitePlayer == email))
+                          ? Colors.green
+                          : (model.result == 2)
+                              ? Colors.orange
+                              : Colors.red,
+                      fontSize: 14),
                 ),
                 const SizedBox(width: 10),
                 Text(
