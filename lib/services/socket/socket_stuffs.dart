@@ -126,7 +126,7 @@ class SocketStuffs {
               onPressed: () {
                 Get.back();
               },
-              child: const Text("Yay")),
+              child: const Text("Yay!")),
         ],
         radius: 30);
     Get.offAll(const HomeScreen());

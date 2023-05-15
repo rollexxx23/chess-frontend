@@ -1,5 +1,6 @@
 import 'package:chess_game/models/auth/profile.dart';
 import 'package:chess_game/models/game/match.dart';
+import 'package:chess_game/screens/profile/game_replay.dart';
 import 'package:chess_game/screens/welcome/welcome.dart';
 import 'package:chess_game/services/profile/profile_api.dart';
 import 'package:country_code_picker/country_code_picker.dart';
@@ -303,22 +304,27 @@ Widget matchWidget(MatchModel model, String email) {
                 ),
               ],
             ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: const [
-                Text(
-                  "Review",
-                  style: TextStyle(
-                      color: Color(0xff5694B0),
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold),
-                ),
-                SizedBox(width: 10),
-                Icon(
-                  Icons.arrow_forward_ios,
-                  color: Color(0xff5694B0),
-                )
-              ],
+            InkWell(
+              onTap: () {
+                Get.to(ReplayScreen(fen: model.gameMoves));
+              },
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: const [
+                  Text(
+                    "Review",
+                    style: TextStyle(
+                        color: Color(0xff5694B0),
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(width: 10),
+                  Icon(
+                    Icons.arrow_forward_ios,
+                    color: Color(0xff5694B0),
+                  )
+                ],
+              ),
             ),
           ],
         ),
