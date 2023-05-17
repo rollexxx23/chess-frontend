@@ -1,7 +1,5 @@
 // ignore_for_file: import_of_legacy_library_into_null_safe
 
-import 'dart:io';
-
 import 'package:chess_game/utils/chess_game.dart'
     show level2AI, makeAiMove, makeMove;
 import 'package:chess_game/widgets/forfeit_game.dart';
@@ -9,7 +7,7 @@ import 'package:flutter/material.dart';
 import "package:flutter_stateless_chessboard/flutter_stateless_chessboard.dart"
     show Chessboard;
 import 'package:flutter_stateless_chessboard/utils.dart';
-import 'package:get/get.dart';
+
 import 'package:flutter_stateless_chessboard/types.dart' as types;
 
 const List<String> outcomes = ["Draw", "White", "Black"];

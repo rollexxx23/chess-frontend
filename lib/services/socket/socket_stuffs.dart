@@ -10,6 +10,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import "package:flutter_stateless_chessboard/flutter_stateless_chessboard.dart"
     show ShortMove;
 import 'package:get/get.dart';
