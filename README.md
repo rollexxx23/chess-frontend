@@ -1,16 +1,23 @@
-# chess
+# Chess App 
+(Backend code: https://github.com/rollexxx23/chess-backend)
 
-A new Flutter project.
+This is a chess app built using Flutter, a cross-platform framework for building mobile applications. The app allows players to enjoy chess in various modes, including player vs player mode, vs AI mode with multiple difficulty levels, and online mode using socket programming.
 
-## Getting Started
+## Features
 
-This project is a starting point for a Flutter application.
+- **Player vs Player Mode:** This mode enables two players to play against each other on the same device. They can take turns making moves and compete to checkmate each other's kings.
 
-A few resources to get you started if this is your first Flutter project:
+- **vs AI Mode:** In this mode, players can choose to play against an AI opponent. The app offers three levels of difficulty - easy, medium, and hard. Players can test their skills against the AI at different challenge levels.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- **Online Mode:** The app also supports an online mode where players can compete with other chess enthusiasts over the internet. This mode utilizes socket programming to establish a connection between players and enable real-time gameplay. Users can play against opponents from anywhere in the world.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
+
+# Tech stack used
+
+## Frontend
+*Language:* Dart,
+*Platform:* Flutter,
+*State-Management:* Getx
+
+
