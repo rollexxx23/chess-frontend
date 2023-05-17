@@ -52,10 +52,6 @@ class SocketStuffs {
 
   void readMessages() async {
     channel.stream.listen((event) async {
-      if (event.toString() == "game over") {
-        handleForfeit();
-        return;
-      }
       var jsonDecoded = await json.decode(event);
       if (jsonDecoded["message_type"] != null &&
           jsonDecoded["message_type"] == "GAME_INIT") {
@@ -64,6 +60,11 @@ class SocketStuffs {
       } else if (jsonDecoded["message_type"] != null &&
           jsonDecoded["message_type"] == "GAME_MOVE") {
         handleMoves(jsonDecoded);
+      } else if (jsonDecoded["message_type"] != null &&
+          jsonDecoded["message_type"] == "GAME_STATUS") {
+        if (jsonDecoded["forfeited"] ?? false) {
+          handleForfeit();
+        } else {}
       }
     });
   }
@@ -124,11 +125,28 @@ class SocketStuffs {
         actions: [
           CupertinoDialogAction(
               onPressed: () {
-                Get.back();
+                Get.offAll(const HomeScreen());
               },
               child: const Text("Yay!")),
         ],
         radius: 30);
-    Get.offAll(const HomeScreen());
+  }
+
+  void showResult(var jsonDecoded) {
+    String result = jsonDecoded["result"];
+    Get.defaultDialog(
+        title: "You $result The Game",
+        middleText: (result != "Draw") ? "ByCheckmate" : "",
+        backgroundColor: Colors.grey,
+        titleStyle: const TextStyle(color: Colors.black),
+        middleTextStyle: const TextStyle(color: Colors.black),
+        actions: [
+          CupertinoDialogAction(
+              onPressed: () {
+                Get.offAll(const HomeScreen());
+              },
+              child: const Text("Okay")),
+        ],
+        radius: 30);
   }
 }
