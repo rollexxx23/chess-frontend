@@ -1,4 +1,5 @@
-# Chess App (backend code: https://github.com/rollexxx23/chess-backend)
+# Chess App 
+(Backend code: https://github.com/rollexxx23/chess-backend)
 
 This is a chess app built using Flutter, a cross-platform framework for building mobile applications. The app allows players to enjoy chess in various modes, including player vs player mode, vs AI mode with multiple difficulty levels, and online mode using socket programming.
 
