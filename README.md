@@ -17,7 +17,9 @@ This is a chess app built using Flutter, a cross-platform framework for building
 
 ## Frontend
 *Language:* Dart
+
 *Platform:* Flutter
+
 *State-Management:* Getx
 
 
