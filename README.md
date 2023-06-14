@@ -20,4 +20,4 @@ This is a chess app built using Flutter, a cross-platform framework for building
 *Platform:* Flutter,
 *State-Management:* Getx
 
-![screenshot](https://res.cloudinary.com/dek0w0qnj/image/upload/v1686719186/Screenshot_1684308883_mfb0zx.png){:height="200" width="300"}
+<img src="https://res.cloudinary.com/dek0w0qnj/image/upload/v1686719186/Screenshot_1684308883_mfb0zx.png width="100" height="200">
