@@ -98,6 +98,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             style: const TextStyle(
                               color: Colors.white,
                             ),
+                            obscureText: true,
                             controller: emailTextController,
                             decoration: InputDecoration(
                               border: InputBorder.none,
